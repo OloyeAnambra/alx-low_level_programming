@@ -9,16 +9,20 @@
 
 int main(void)
 {
-	char c;
+	int ch = 'a';
+	int CH = 'A';
 
-	for (c = 'a' ; c <= 'z' ; c++)
+	while (ch <= 'z')
 	{
-		if ((c == 'q' || c == 'e') != 1)
-		{
-			putchar(c);
-		}
-
+		putchar(ch);
+		ch++;
 	}
+	while (CH <= 'Z')
+	{
+		putchar(CH);
+		CH++;
+	}
+	
 	putchar('\n');
 	return (0);
 }
