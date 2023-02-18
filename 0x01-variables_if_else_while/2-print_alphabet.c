@@ -9,18 +9,12 @@
 
 int main(void)
 {
-	char c;
-
-	for (c = 'a' ; c <= 'z' ; c++)
+	int ch = 'a';
+	while (ch <= 'z')
 	{
-		if ((c == 'q' || c == 'e') != 1)
-		{
-			putchar(c);
-		}
-
+		putchar(ch);
+		ch++;
 	}
 	putchar('\n');
-	return (0);
+	return(0);
 }
-
-
