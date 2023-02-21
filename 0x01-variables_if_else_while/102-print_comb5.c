@@ -1,12 +1,10 @@
-#include <stdlib.h>
-#include <time.h>
 #include <stdio.h>
 
 /**
- * main - Entry point
- *
+ * main - prints all possible combinations of three digits
  * Return: Always 0 (Success)
  */
+
 int main(void)
 {
 	int ones = '0';
@@ -20,13 +18,13 @@ int main(void)
 			for (ones = '0'; ones <= '9'; ones++)
 			{
 				if (!((ones == tens) || (tens == hundreds) ||
-							(tens > ones) || (hundreds > tens)))
+							(tens > ones) || (hundreds > tens))) /*eliminates repitition*/
 				{
 					putchar(hundreds);
 					putchar(tens);
 					putchar(ones);
-
-					if (!(ones == '9' && tens == '8' && hundreds == '7'))
+					if (!(ones == '9' && hundreds == '7'
+								&& tens == '8')) /*adds commas ansd spaces*/
 					{
 						putchar(',');
 						putchar(' ');
@@ -35,8 +33,6 @@ int main(void)
 			}
 		}
 	}
-
 	putchar('\n');
-
 	return (0);
 }
