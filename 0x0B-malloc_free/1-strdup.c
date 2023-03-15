@@ -2,12 +2,12 @@
 #include <stdlib.h>
 
 /**
- * _strcopy - copy a string to a newly allocated space in memory
+ * _strdup - copy a string to a newly allocated space in memory
  * @str: string to copy
  *
  * Return: pointer to duplicated string or NULL if error
  */
-char *_strcopy(char *str)
+char *_strdup(char *str)
 {
 	unsigned int i, k;
 	char *s;
