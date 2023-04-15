@@ -14,4 +14,4 @@ int append_text_to_file(const char *filename, char *text_content);
 char *buffer(char *argument);
 void close_file(int fd);
 
-#endif
+#endif /* #ifndef MAIN_H */
