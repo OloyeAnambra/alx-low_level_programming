@@ -1,84 +1,36 @@
 #include "main.h"
 
 /**
- * buffer - a function that allocates 1024 bytes on the heap
- * @argument: the argv file for which memory is being allocated
+ * append_text_to_file - a function that appends text at the end of a file
+ * and adds a string at the end of the file
+ * @filename: the name of the file to create
+ * @text_content: a NULL terminated string to add at the end of the file
  *
- * Return: a pointer to the allocated buffer
+ * Return: 1 (Success), -1 (Failure)
  */
-char *buffer(char *argument)
-{
-	char *buf;
 
-	buf = malloc(1024 * sizeof(char));
-	if (buf == NULL)
+int append_text_to_file(const char *filename, char *text_content)
+{
+	int fd, wr, j = 0;
+
+	if (filename == NULL)
+		return (-1);
+
+	fd = open(filename, O_WRONLY | O_APPEND);
+	if (fd == -1)
+		return (-1);
+
+	if (text_content != NULL)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argument);
-		exit(99);
+		while (text_content[j])
+			j++;
 	}
 
-	return (buf);
-}
+	wr = write(fd, text_content, j);
+	if (wr == -1)
+		return (-1);
 
-/**
- * close_file - a function which closes file descriptors
- * @fd: the file descriptor to be closed
- */
-void close_file(int fd)
-{
-	int cl;
+	close(fd);
 
-	cl = close(fd);
-
-	if (cl == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fd);
-		exit(100);
-	}
-}
-
-/**
- * main - Entry point
- * @ac: the number of arguments passed
- * @av: a pointer to the arguments
- * Return: 1 (Success); 97, 98, 99, 100 (Failure)
- */
-int main(int ac, char *av[])
-{
-	int f_from, f_to, rd, wr;
-	char *buf;
-
-	if (ac != 3)
-	{
-		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
-		exit(97);
-	}
-	buf = buffer(av[2]);
-	f_from = open(av[1], O_RDONLY);
-	rd = read(f_from, buf, 1024);
-	f_to = open(av[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
-	do {
-		if (f_from == -1 || rd == -1)
-		{
-			dprintf(STDERR_FILENO,
-				"Error: Can't read from file %s\n", av[1]);
-			free(buf);
-			exit(98);
-		}
-		wr = write(f_to, buf, rd);
-		if (f_to == -1 || wr == -1)
-		{
-			dprintf(STDERR_FILENO,
-				"Error: Can't write to %s\n", av[2]);
-			free(buf);
-			exit(99);
-		}
-		rd = read(f_from, buf, 1024);
-		f_to = open(av[2], O_WRONLY | O_APPEND);
-	} while (rd > 0);
-
-	free(buf);
-	close_file(f_from);
-	close_file(f_to);
-	return (0);
+	return (1);
 }
